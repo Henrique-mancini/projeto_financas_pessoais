@@ -3,19 +3,28 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import { FinanceiroProvider } from './contexts/FinanceiroContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 
-export default function App() {
-  const isAutenticado = !!localStorage.getItem('token');
+function Rotas() {
+  const { autenticado } = useAuth();
 
   return (
-    <FinanceiroProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Navigate to={isAutenticado ? '/dashboard' : '/login'} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={isAutenticado ? <Dashboard /> : <Navigate to="/login" />} />
-        </Routes>
-      </Router>
-    </FinanceiroProvider>
+    <Routes>
+      <Route path="/" element={<Navigate to={autenticado ? '/dashboard' : '/login'} />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={autenticado ? <Dashboard /> : <Navigate to="/login" />} />
+    </Routes>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <FinanceiroProvider>
+        <Router>
+          <Rotas />
+        </Router>
+      </FinanceiroProvider>
+    </AuthProvider>
   );
 }

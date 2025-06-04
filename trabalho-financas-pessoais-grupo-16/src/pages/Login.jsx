@@ -1,12 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    localStorage.setItem('token', 'fake-token');
+    navigate('/dashboard');
+  };
+
   return (
-    <div style={{ padding: '1rem' }}>
+    <div style={{ padding: '2rem' }}>
       <h2>Login</h2>
-      <input type="text" placeholder="Usuário" /><br />
-      <input type="password" placeholder="Senha" /><br />
-      <button>Entrar</button>
+      <button onClick={handleLogin}>Entrar</button>
     </div>
   );
 }

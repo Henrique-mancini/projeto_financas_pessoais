@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import { FinanceiroProvider } from './contexts/FinanceiroContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import Cadastro from './pages/Cadastro';
 
 function Rotas() {
   const { autenticado } = useAuth();
@@ -13,6 +14,7 @@ function Rotas() {
       <Route path="/" element={<Navigate to={autenticado ? '/dashboard' : '/login'} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={autenticado ? <Dashboard /> : <Navigate to="/login" />} />
+      <Route path="/cadastro" element={<Cadastro />} />
     </Routes>
   );
 }

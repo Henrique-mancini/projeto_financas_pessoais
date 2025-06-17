@@ -2,6 +2,7 @@ import React from 'react';
 import CardResumo from '../components/CardResumo';
 import FormLancamento from '../components/FormLancamento';
 import Navbar from '../components/Navbar';
+import ListaLancamentos from '../components/ListaLancamentos';
 import { useFinanceiro } from '../contexts/FinanceiroContext';
 
 export default function Dashboard() {
@@ -9,7 +10,8 @@ export default function Dashboard() {
     saldo,
     totalReceitas,
     totalDespesas,
-    adicionarLancamento
+    adicionarLancamento,
+    lancamentos
   } = useFinanceiro();
 
   return (
@@ -24,6 +26,8 @@ export default function Dashboard() {
         </div>
 
         <FormLancamento onAdicionar={adicionarLancamento} />
+
+        <ListaLancamentos lancamentos={lancamentos} />
       </div>
     </div>
   );

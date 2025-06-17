@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function GraficoPizza({ lancamentos }) {
   const categorias = {};
@@ -13,16 +13,21 @@ export default function GraficoPizza({ lancamentos }) {
     }
   });
 
-  const data = Object.keys(categorias).map((key) => ({
-    name: key,
-    value: categorias[key],
-  }));
+  const data =
+    Object.keys(categorias).length > 0
+      ? Object.keys(categorias).map((key) => ({
+          name: key,
+          value: categorias[key],
+        }))
+      : [{ name: 'Sem Dados', value: 1 }];
 
   const COLORS = [
     '#2ecc71', '#3498db', '#e74c3c', '#9b59b6',
     '#f1c40f', '#e67e22', '#1abc9c', '#34495e',
     '#7f8c8d', '#d35400', '#16a085', '#c0392b'
   ];
+
+  const NEUTRAL_COLOR = '#bdc3c7';
 
   return (
     <div style={{
@@ -52,7 +57,14 @@ export default function GraficoPizza({ lancamentos }) {
               label
             >
               {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={
+                    entry.name === 'Sem Dados'
+                      ? NEUTRAL_COLOR
+                      : COLORS[index % COLORS.length]
+                  }
+                />
               ))}
             </Pie>
             <Tooltip />
@@ -72,11 +84,17 @@ export default function GraficoPizza({ lancamentos }) {
               <div style={{
                 width: '16px',
                 height: '16px',
-                backgroundColor: COLORS[index % COLORS.length],
+                backgroundColor: entry.name === 'Sem Dados'
+                  ? NEUTRAL_COLOR
+                  : COLORS[index % COLORS.length],
                 borderRadius: '4px',
                 marginRight: '8px'
               }}></div>
-              <span>{entry.name} — R$ {entry.value.toFixed(2)}</span>
+              <span>
+                {entry.name === 'Sem Dados'
+                  ? 'Nenhum lançamento'
+                  : `${entry.name} — R$ ${entry.value.toFixed(2)}`}
+              </span>
             </li>
           ))}
         </ul>

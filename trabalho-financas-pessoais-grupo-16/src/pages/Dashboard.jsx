@@ -3,6 +3,7 @@ import CardResumo from '../components/CardResumo';
 import FormLancamento from '../components/FormLancamento';
 import Navbar from '../components/Navbar';
 import ListaLancamentos from '../components/ListaLancamentos';
+import GraficoPizza from '../components/GraficoPizza';
 import { useFinanceiro } from '../contexts/FinanceiroContext';
 
 export default function Dashboard() {
@@ -25,7 +26,10 @@ export default function Dashboard() {
           <CardResumo titulo="Total de Despesas" valor={totalDespesas} cor="#e74c3c" />
         </div>
 
-        <FormLancamento onAdicionar={adicionarLancamento} />
+        <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', marginTop: '1rem', alignItems: 'flex-start' }}>
+          <FormLancamento onAdicionar={adicionarLancamento} />
+          <GraficoPizza lancamentos={lancamentos} />
+        </div>
 
         <ListaLancamentos lancamentos={lancamentos} />
       </div>

@@ -23,17 +23,19 @@ export default function Dashboard() {
     <div>
       <Navbar />
 
-      <div style={{
-        backgroundColor: '#ecf0f1',
-        padding: '1rem',
-        borderRadius: '8px',
-        margin: '1rem',
-        textAlign: 'center',
-        boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
-      }}>
-        <h2 style={{ margin: 0 }}> Olá, {usuarioAtual}! Hoje é {new Date().toLocaleDateString()}.</h2>
-        <p>Bem-vindo(a) ao seu controle financeiro pessoal.</p>
-      </div>
+<div style={{
+  backgroundColor: '#ecf0f1',
+  padding: '1rem',
+  borderRadius: '8px',
+  margin: '1rem',
+  textAlign: 'center',
+  boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
+}}>
+  <h2 style={{ margin: 0 }}>
+    Olá, {usuarioAtual.split('@')[0]}! Hoje é {new Date().toLocaleDateString()}.
+  </h2>
+  <p>Bem-vindo(a) ao seu controle financeiro pessoal.</p>
+</div>
 
       <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 

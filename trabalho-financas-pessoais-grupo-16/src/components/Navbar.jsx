@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function Navbar() {
-  const { logout } = useAuth();
+  const { logout, usuarioAtual } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -15,23 +15,26 @@ export default function Navbar() {
     <header style={{
       backgroundColor: '#2c3e50',
       color: 'white',
-      padding: '1rem',
+      padding: '1rem 2rem',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: '1rem'
+      boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
     }}>
-      <h1 style={{ margin: 0 }}>Dashboard</h1>
+      <h1 style={{ margin: 0, fontSize: '1.8rem' }}> Controle Financeiro</h1>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <span>Usuário</span>
+        <span>👤 {usuarioAtual}</span>
         <button onClick={handleLogout} style={{
           backgroundColor: '#e74c3c',
           color: '#fff',
           border: 'none',
-          borderRadius: '5px',
+          borderRadius: '6px',
           padding: '0.4rem 0.8rem',
-          cursor: 'pointer'
-        }}>
+          cursor: 'pointer',
+          transition: 'background-color 0.3s ease'
+        }}
+        onMouseOver={(e) => e.target.style.backgroundColor = '#c0392b'}
+        onMouseOut={(e) => e.target.style.backgroundColor = '#e74c3c'}>
           Sair
         </button>
       </div>

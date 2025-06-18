@@ -24,34 +24,75 @@ export default function Cadastro() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Cadastro de Usuário</h2>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      backgroundColor: '#f7f9fa'
+    }}>
+      <div style={{
+        backgroundColor: '#fff',
+        padding: '2rem',
+        borderRadius: '12px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        width: '100%',
+        maxWidth: '400px'
+      }}>
+        <h2 style={{ textAlign: 'center' }}>Cadastro</h2>
 
-      <form onSubmit={handleCadastro} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '300px' }}>
-        <input
-          type="email"
-          placeholder="E-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <form onSubmit={handleCadastro} style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem'
+        }}>
+          <input
+            type="email"
+            placeholder="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={{
+              padding: '0.6rem',
+              borderRadius: '8px',
+              border: '1px solid #ccc'
+            }}
+          />
 
-        <input
-          type="password"
-          placeholder="Senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-          required
-        />
+          <input
+            type="password"
+            placeholder="Senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            required
+            style={{
+              padding: '0.6rem',
+              borderRadius: '8px',
+              border: '1px solid #ccc'
+            }}
+          />
 
-        {erro && <span style={{ color: 'red' }}>{erro}</span>}
+          {erro && <span style={{ color: 'red' }}>{erro}</span>}
 
-        <button type="submit">Cadastrar</button>
-      </form>
+          <button type="submit" style={{
+            padding: '0.6rem',
+            backgroundColor: '#2c3e50',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            transition: 'background-color 0.3s ease'
+          }}
+          onMouseOver={(e) => e.target.style.backgroundColor = '#1a252f'}
+          onMouseOut={(e) => e.target.style.backgroundColor = '#2c3e50'}>
+            Cadastrar
+          </button>
+        </form>
 
-      <p style={{ marginTop: '1rem' }}>
-        Já tem conta? <a href="/login">Faça login</a>
-      </p>
+        <p style={{ marginTop: '1rem', textAlign: 'center' }}>
+          Já tem conta? <a href="/login">Faça login</a>
+        </p>
+      </div>
     </div>
   );
 }

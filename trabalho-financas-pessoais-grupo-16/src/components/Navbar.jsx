@@ -22,8 +22,38 @@ export default function Navbar() {
       boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
     }}>
       <h1 style={{ margin: 0, fontSize: '1.8rem' }}> Controle Financeiro</h1>
+
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <span>👤 {usuarioAtual}</span>
+        <button
+          onClick={() => navigate('/dashboard')}
+          style={{
+            backgroundColor: '#3498db',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '6px',
+            padding: '0.4rem 0.8rem',
+            cursor: 'pointer'
+          }}
+        >
+          Dashboard
+        </button>
+
+        <button
+          onClick={() => navigate('/parcelas')}
+          style={{
+            backgroundColor: '#2980b9',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '6px',
+            padding: '0.4rem 0.8rem',
+            cursor: 'pointer'
+          }}
+        >
+          Parcelas
+        </button>
+
+        <span>👤 {usuarioAtual.split('@')[0]}</span>
+
         <button onClick={handleLogout} style={{
           backgroundColor: '#e74c3c',
           color: '#fff',

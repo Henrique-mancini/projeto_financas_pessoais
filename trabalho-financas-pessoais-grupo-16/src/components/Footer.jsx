@@ -4,12 +4,12 @@ export default function Footer() {
   return (
     <footer style={{
       backgroundColor: '#2c3e50',
-      color: '#ecf0f1',
-      padding: '1rem',
+      color: '#fff',
       textAlign: 'center',
-      marginTop: '2rem'
+      padding: '0.8rem',
+      marginTop: 'auto'
     }}>
-      <p>© {new Date().getFullYear()} Controle Financeiro Pessoal</p>
+      <p style={{ margin: 0 }}>© {new Date().getFullYear()} Controle Financeiro</p>
     </footer>
   );
 }

@@ -21,7 +21,7 @@ export default function Navbar() {
       alignItems: 'center',
       boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
     }}>
-      <h1 style={{ margin: 0, fontSize: '1.8rem' }}> Controle Financeiro</h1>
+      <h1 style={{ margin: 0, fontSize: '1.8rem' }}>Controle Financeiro</h1>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <button
@@ -52,7 +52,7 @@ export default function Navbar() {
           Parcelas
         </button>
 
-        <span>👤 {usuarioAtual.split('@')[0]}</span>
+        <span>{usuarioAtual.split('@')[0]}</span>
 
         <button onClick={handleLogout} style={{
           backgroundColor: '#e74c3c',

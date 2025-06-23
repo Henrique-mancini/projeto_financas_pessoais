@@ -9,7 +9,7 @@ export default function ListaLancamentos({ lancamentos }) {
       borderRadius: '12px',
       maxWidth: '1000px',
       width: '100%',
-      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)'
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
     }}>
       <h3 style={{ textAlign: 'center' }}>Lista de Lançamentos</h3>
 
@@ -17,7 +17,7 @@ export default function ListaLancamentos({ lancamentos }) {
         <p style={{ textAlign: 'center' }}>Nenhum lançamento cadastrado.</p>
       ) : (
         <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <table>
             <thead>
               <tr>
                 <th style={thTdStyle}>Data</th>
@@ -30,9 +30,8 @@ export default function ListaLancamentos({ lancamentos }) {
             <tbody>
               {lancamentos.map((item, index) => {
                 const ehParcela = item.descricao.includes('(Parcela');
-
                 return (
-                  <tr key={index}>
+                  <tr key={index} style={{ backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#fff' }}>
                     <td style={thTdStyle}>{item.data}</td>
                     <td style={thTdStyle}>
                       {item.tipo === 'receita' ? 'Receita' : 'Despesa'}
@@ -63,7 +62,7 @@ export default function ListaLancamentos({ lancamentos }) {
 
 const thTdStyle = {
   borderBottom: '1px solid #ddd',
-  padding: '0.5rem',
+  padding: '0.6rem',
   textAlign: 'left'
 };
 

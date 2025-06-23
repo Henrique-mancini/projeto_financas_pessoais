@@ -11,9 +11,6 @@ import { useParcelas } from '../contexts/ParcelasContext';
 
 export default function Dashboard() {
   const {
-    saldo: saldoLancamentos,
-    totalReceitas,
-    totalDespesas: despesasLancamentos,
     adicionarLancamento,
     lancamentos
   } = useFinanceiro();
@@ -22,9 +19,14 @@ export default function Dashboard() {
   const { parcelas } = useParcelas();
 
   const hoje = new Date();
-
   const [mesSelecionado, setMesSelecionado] = useState(hoje.getMonth());
   const [anoSelecionado, setAnoSelecionado] = useState(hoje.getFullYear());
+
+  const lancamentosDoMes = lancamentos.filter((l) => {
+    const [dia, mes, ano] = l.data.split('/').map(Number);
+    const dataLanc = new Date(ano, mes - 1, dia);
+    return dataLanc.getMonth() === mesSelecionado && dataLanc.getFullYear() === anoSelecionado;
+  });
 
   const parcelasDoMes = parcelas.filter((p) => {
     const [dia, mes, ano] = p.data.split('/').map(Number);
@@ -32,16 +34,19 @@ export default function Dashboard() {
     return dataParcela.getMonth() === mesSelecionado && dataParcela.getFullYear() === anoSelecionado;
   });
 
+  const totalReceitas = lancamentosDoMes
+    .filter(l => l.tipo === 'receita')
+    .reduce((acc, l) => acc + l.valor, 0);
+
+  const totalDespesasLancamentos = lancamentosDoMes
+    .filter(l => l.tipo === 'despesa')
+    .reduce((acc, l) => acc + l.valor, 0);
+
   const totalParcelasMes = parcelasDoMes.reduce((acc, p) => acc + p.valor, 0);
 
-  const saldo = saldoLancamentos - totalParcelasMes;
-  const totalDespesas = despesasLancamentos + totalParcelasMes;
+  const totalDespesas = totalDespesasLancamentos + totalParcelasMes;
 
-  const lancamentosDoMes = lancamentos.filter((l) => {
-    const [dia, mes, ano] = l.data.split('/').map(Number);
-    const dataLanc = new Date(ano, mes - 1, dia);
-    return dataLanc.getMonth() === mesSelecionado && dataLanc.getFullYear() === anoSelecionado;
-  });
+  const saldo = totalReceitas - totalDespesas;
 
   const lancamentosComParcelas = [
     ...lancamentosDoMes,
@@ -111,7 +116,7 @@ export default function Dashboard() {
           flexWrap: 'wrap',
           justifyContent: 'center'
         }}>
-          <CardResumo titulo="Saldo Atual" valor={saldo} cor="#2ecc71" />
+          <CardResumo titulo="Saldo" valor={saldo} cor="#2ecc71" />
           <CardResumo titulo="Total de Receitas" valor={totalReceitas} cor="#3498db" />
           <CardResumo titulo="Total de Despesas" valor={totalDespesas} cor="#e74c3c" />
         </div>
@@ -123,7 +128,10 @@ export default function Dashboard() {
           alignItems: 'flex-start',
           justifyContent: 'center'
         }}>
-          <FormLancamento onAdicionar={adicionarLancamento} />
+          <FormLancamento onAdicionar={adicionarLancamento} 
+          mesSelecionado={mesSelecionado}
+          anoSelecionado={anoSelecionado}
+          />
           <GraficoPizza lancamentos={lancamentosComParcelas} />
         </div>
 

@@ -1,55 +1,57 @@
 import React, { useState } from 'react';
 
-export default function FormLancamento({ onAdicionar }) {
-  const [tipo, setTipo] = useState('receita');
-  const [categoria, setCategoria] = useState('');
-  const [valor, setValor] = useState('');
+export default function FormLancamento({ onAdicionar, mesSelecionado, anoSelecionado }) {
   const [descricao, setDescricao] = useState('');
+  const [valor, setValor] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [tipo, setTipo] = useState('receita');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!categoria || !valor || isNaN(valor)) return;
 
-    const novoLancamento = {
-      tipo,
-      categoria,
-      valor: parseFloat(valor),
+    if (!descricao || !valor || !categoria) return;
+
+    const data = `01/${(mesSelecionado + 1).toString().padStart(2, '0')}/${anoSelecionado}`;
+
+    const novo = {
       descricao,
-      data: new Date().toLocaleDateString(),
+      valor: parseFloat(valor),
+      categoria,
+      tipo,
+      data
     };
 
-    onAdicionar(novoLancamento);
-    setCategoria('');
-    setValor('');
+    onAdicionar(novo);
+
     setDescricao('');
+    setValor('');
+    setCategoria('');
+    setTipo('receita');
   };
 
-  const categoriasReceita = ['Salário', 'Investimentos', 'Freelance', 'Outros'];
-  const categoriasDespesa = ['Alimentação', 'Moradia', 'Transporte', 'Lazer', 'Outros'];
-
   return (
-    <form onSubmit={handleSubmit} style={{
-      marginTop: '2rem',
+    <div style={{
       backgroundColor: '#fff',
-      padding: '1rem',
+      padding: '1.5rem',
       borderRadius: '12px',
-      maxWidth: '500px',
-      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)'
+      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+      width: '100%',
+      maxWidth: '400px'
     }}>
-      <h3>Lançar Receita ou Despesa</h3>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-        
-        <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
-          <option value="receita">Receita</option>
-          <option value="despesa">Despesa</option>
-        </select>
+      <h3 style={{ textAlign: 'center' }}>Novo Lançamento</h3>
 
-        <select value={categoria} onChange={(e) => setCategoria(e.target.value)} required>
-          <option value="">Selecione a categoria</option>
-          {(tipo === 'receita' ? categoriasReceita : categoriasDespesa).map((cat) => (
-            <option key={cat} value={cat}>{cat}</option>
-          ))}
-        </select>
+      <form onSubmit={handleSubmit} style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem'
+      }}>
+        <input
+          type="text"
+          placeholder="Descrição"
+          value={descricao}
+          onChange={(e) => setDescricao(e.target.value)}
+          required
+        />
 
         <input
           type="number"
@@ -61,13 +63,28 @@ export default function FormLancamento({ onAdicionar }) {
 
         <input
           type="text"
-          placeholder="Descrição (opcional)"
-          value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
+          placeholder="Categoria"
+          value={categoria}
+          onChange={(e) => setCategoria(e.target.value)}
+          required
         />
 
-        <button type="submit">Adicionar</button>
-      </div>
-    </form>
+        <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+          <option value="receita">Receita</option>
+          <option value="despesa">Despesa</option>
+        </select>
+
+        <button type="submit" style={{
+          padding: '0.6rem',
+          backgroundColor: '#2c3e50',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '8px',
+          cursor: 'pointer'
+        }}>
+          Adicionar
+        </button>
+      </form>
+    </div>
   );
 }

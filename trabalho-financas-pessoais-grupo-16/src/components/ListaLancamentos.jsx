@@ -7,38 +7,52 @@ export default function ListaLancamentos({ lancamentos }) {
       backgroundColor: '#fff',
       padding: '1rem',
       borderRadius: '12px',
-      maxWidth: '800px',
+      maxWidth: '1000px',
       width: '100%',
       boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)'
     }}>
-      <h3>Lista de Lançamentos</h3>
+      <h3 style={{ textAlign: 'center' }}>Lista de Lançamentos</h3>
 
       {lancamentos.length === 0 ? (
-        <p>Nenhum lançamento cadastrado.</p>
+        <p style={{ textAlign: 'center' }}>Nenhum lançamento cadastrado.</p>
       ) : (
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr>
-                <th style={{ textAlign: 'left' }}>Data</th>
-                <th style={{ textAlign: 'left' }}>Tipo</th>
-                <th style={{ textAlign: 'left' }}>Categoria</th>
-                <th style={{ textAlign: 'left' }}>Descrição</th>
-                <th style={{ textAlign: 'left' }}>Valor</th>
+                <th style={thTdStyle}>Data</th>
+                <th style={thTdStyle}>Tipo</th>
+                <th style={thTdStyle}>Categoria</th>
+                <th style={thTdStyle}>Descrição</th>
+                <th style={thTdStyle}>Valor</th>
               </tr>
             </thead>
             <tbody>
-              {lancamentos.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.data}</td>
-                  <td>{item.tipo === 'receita' ? 'Receita' : 'Despesa'}</td>
-                  <td>{item.categoria}</td>
-                  <td>{item.descricao || '-'}</td>
-                  <td style={{ color: item.tipo === 'receita' ? 'green' : 'red' }}>
-                    R$ {item.valor.toFixed(2)}
-                  </td>
-                </tr>
-              ))}
+              {lancamentos.map((item, index) => {
+                const ehParcela = item.descricao.includes('(Parcela');
+
+                return (
+                  <tr key={index}>
+                    <td style={thTdStyle}>{item.data}</td>
+                    <td style={thTdStyle}>
+                      {item.tipo === 'receita' ? 'Receita' : 'Despesa'}
+                    </td>
+                    <td style={thTdStyle}>{item.categoria}</td>
+                    <td style={thTdStyle}>
+                      {item.descricao}{' '}
+                      {ehParcela && (
+                        <span style={badgeStyle}>Parcela</span>
+                      )}
+                    </td>
+                    <td style={{
+                      ...thTdStyle,
+                      color: item.tipo === 'receita' ? '#2ecc71' : '#e74c3c'
+                    }}>
+                      R$ {item.valor.toFixed(2)}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -46,3 +60,19 @@ export default function ListaLancamentos({ lancamentos }) {
     </div>
   );
 }
+
+const thTdStyle = {
+  borderBottom: '1px solid #ddd',
+  padding: '0.5rem',
+  textAlign: 'left'
+};
+
+const badgeStyle = {
+  backgroundColor: '#bdc3c7',
+  color: '#2c3e50',
+  borderRadius: '8px',
+  padding: '2px 6px',
+  marginLeft: '6px',
+  fontSize: '0.75rem',
+  fontWeight: 'bold'
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CardResumo from '../components/CardResumo';
 import FormLancamento from '../components/FormLancamento';
 import Navbar from '../components/Navbar';
@@ -22,13 +22,14 @@ export default function Dashboard() {
   const { parcelas } = useParcelas();
 
   const hoje = new Date();
-  const mesAtual = hoje.getMonth();
-  const anoAtual = hoje.getFullYear();
+
+  const [mesSelecionado, setMesSelecionado] = useState(hoje.getMonth());
+  const [anoSelecionado, setAnoSelecionado] = useState(hoje.getFullYear());
 
   const parcelasDoMes = parcelas.filter((p) => {
     const [dia, mes, ano] = p.data.split('/').map(Number);
     const dataParcela = new Date(ano, mes - 1, dia);
-    return dataParcela.getMonth() === mesAtual && dataParcela.getFullYear() === anoAtual;
+    return dataParcela.getMonth() === mesSelecionado && dataParcela.getFullYear() === anoSelecionado;
   });
 
   const totalParcelasMes = parcelasDoMes.reduce((acc, p) => acc + p.valor, 0);
@@ -36,8 +37,14 @@ export default function Dashboard() {
   const saldo = saldoLancamentos - totalParcelasMes;
   const totalDespesas = despesasLancamentos + totalParcelasMes;
 
+  const lancamentosDoMes = lancamentos.filter((l) => {
+    const [dia, mes, ano] = l.data.split('/').map(Number);
+    const dataLanc = new Date(ano, mes - 1, dia);
+    return dataLanc.getMonth() === mesSelecionado && dataLanc.getFullYear() === anoSelecionado;
+  });
+
   const lancamentosComParcelas = [
-    ...lancamentos,
+    ...lancamentosDoMes,
     ...parcelasDoMes.map(p => ({
       tipo: 'despesa',
       categoria: p.categoria,
@@ -63,6 +70,37 @@ export default function Dashboard() {
           Olá, {usuarioAtual.split('@')[0]}! Hoje é {new Date().toLocaleDateString()}.
         </h2>
         <p>Bem-vindo(a) ao seu controle financeiro pessoal.</p>
+      </div>
+
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '1rem',
+        marginBottom: '1rem'
+      }}>
+        <div>
+          <label>Mês: </label>
+          <select
+            value={mesSelecionado}
+            onChange={(e) => setMesSelecionado(parseInt(e.target.value))}
+          >
+            {[
+              'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+              'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+            ].map((mes, index) => (
+              <option key={index} value={index}>{mes}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Ano: </label>
+          <input
+            type="number"
+            value={anoSelecionado}
+            onChange={(e) => setAnoSelecionado(parseInt(e.target.value))}
+            style={{ width: '80px' }}
+          />
+        </div>
       </div>
 
       <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>

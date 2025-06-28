@@ -1,12 +1,22 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
 const FinanceiroContext = createContext();
 
 export function FinanceiroProvider({ children }) {
   const [lancamentos, setLancamentos] = useState([]);
+  const API_URL = 'http://localhost:3001/lancamentos';
+
+  useEffect(() => {
+    axios.get(API_URL)
+      .then(res => setLancamentos(res.data))
+      .catch(err => console.error('Erro ao carregar lançamentos:', err));
+  }, []);
 
   const adicionarLancamento = (novo) => {
-    setLancamentos((prev) => [...prev, novo]);
+    axios.post(API_URL, novo)
+      .then(res => setLancamentos((prev) => [...prev, res.data]))
+      .catch(err => console.error('Erro ao adicionar lançamento:', err));
   };
 
   const totalReceitas = lancamentos
@@ -21,7 +31,13 @@ export function FinanceiroProvider({ children }) {
 
   return (
     <FinanceiroContext.Provider
-      value={{ lancamentos, adicionarLancamento, totalReceitas, totalDespesas, saldo }}
+      value={{
+        lancamentos,
+        adicionarLancamento,
+        totalReceitas,
+        totalDespesas,
+        saldo
+      }}
     >
       {children}
     </FinanceiroContext.Provider>

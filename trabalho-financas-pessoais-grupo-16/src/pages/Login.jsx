@@ -10,9 +10,9 @@ export default function Login() {
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const resultado = login(email, senha);
+    const resultado = await login(email, senha);
 
     if (resultado.sucesso) {
       navigate('/dashboard');
@@ -72,17 +72,20 @@ export default function Login() {
 
           {erro && <span style={{ color: 'red' }}>{erro}</span>}
 
-          <button type="submit" style={{
-            padding: '0.6rem',
-            backgroundColor: '#2c3e50',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s ease'
-          }}
-          onMouseOver={(e) => e.target.style.backgroundColor = '#1a252f'}
-          onMouseOut={(e) => e.target.style.backgroundColor = '#2c3e50'}>
+          <button
+            type="submit"
+            style={{
+              padding: '0.6rem',
+              backgroundColor: '#2c3e50',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s ease'
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#1a252f'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#2c3e50'}
+          >
             Entrar
           </button>
         </form>

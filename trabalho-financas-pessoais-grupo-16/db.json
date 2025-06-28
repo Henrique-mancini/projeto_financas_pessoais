@@ -1,0 +1,54 @@
+{
+  "usuarios": [
+    {
+      "id": "5d36",
+      "email": "admin@gmail.com",
+      "senha": "123"
+    }
+  ],
+  "lancamentos": [],
+  "parcelas": [
+    {
+      "id": "7049",
+      "descricao": "aaaa (Parcela 1/3)",
+      "categoria": "celular",
+      "valor": 166.67,
+      "data": "21/08/2005"
+    },
+    {
+      "id": "658c",
+      "descricao": "aaaa (Parcela 2/3)",
+      "categoria": "celular",
+      "valor": 166.67,
+      "data": "21/09/2005"
+    },
+    {
+      "id": "a0b7",
+      "descricao": "aaaa (Parcela 3/3)",
+      "categoria": "celular",
+      "valor": 166.67,
+      "data": "21/10/2005"
+    },
+    {
+      "id": "37af",
+      "descricao": "aaa (Parcela 1/3)",
+      "categoria": "tablet",
+      "valor": 166.67,
+      "data": "27/06/2025"
+    },
+    {
+      "id": "1a5c",
+      "descricao": "aaa (Parcela 2/3)",
+      "categoria": "tablet",
+      "valor": 166.67,
+      "data": "27/07/2025"
+    },
+    {
+      "id": "1887",
+      "descricao": "aaa (Parcela 3/3)",
+      "categoria": "tablet",
+      "valor": 166.67,
+      "data": "27/08/2025"
+    }
+  ]
+}

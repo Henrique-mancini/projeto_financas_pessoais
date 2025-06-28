@@ -10,18 +10,17 @@ export default function Cadastro() {
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
 
-  const handleCadastro = (e) => {
-    e.preventDefault();
+const handleCadastro = async (e) => {
+  e.preventDefault();
+  const resultado = await cadastrar(email, senha);
 
-    const resultado = cadastrar(email, senha);
-
-    if (resultado.sucesso) {
-      alert('Cadastro realizado com sucesso!');
-      navigate('/login');
-    } else {
-      setErro(resultado.mensagem);
-    }
-  };
+  if (resultado.sucesso) {
+    alert('Cadastro realizado com sucesso!');
+    navigate('/login');
+  } else {
+    setErro(resultado.mensagem);
+  }
+};
 
   return (
     <div style={{
